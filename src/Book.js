@@ -3,11 +3,6 @@ import React, { Component } from 'react'
 
 
 class Book extends Component {
-
-    state = {
-
-    }
-
     render() {
         // These two variables below are used to just clean the code.
         const { thisBook, changeBookShelf } = this.props
