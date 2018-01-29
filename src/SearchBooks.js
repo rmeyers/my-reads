@@ -32,10 +32,19 @@ class SearchBooks extends Component {
     }
 
     render() {
-        // These two variables below are used to just clean the code.
-        // const { books } = this.props
-        const { query, newBooks } = this.state
-        const { changeBookShelf } = this.props
+      // These two variables below are used to just clean the code.
+      // const { books } = this.props
+      const { query, newBooks } = this.state
+      const { books, changeBookShelf } = this.props
+
+      Object.keys(newBooks).forEach(function(key) {
+        var thisId = newBooks[key].id
+        for (var existingBook in books) {
+          if (books[existingBook].id === thisId) {
+            newBooks[key] = books[existingBook]
+          }
+        }
+      })
 
         return (
           <div className="search-books">
@@ -54,10 +63,10 @@ class SearchBooks extends Component {
               <ol className="books-grid">
                 {newBooks.map((book) => (
                   <li key={ book.id }>
-                    <Book
-                        thisBook={ book }
-                        changeBookShelf={ changeBookShelf }>
-                    </Book>
+                    { Book ({
+                        thisBook: book,
+                        changeBookShelf: changeBookShelf
+                    })}
                   </li>
                 ))}
               </ol>

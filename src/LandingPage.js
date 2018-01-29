@@ -31,11 +31,10 @@ class LandingPage extends Component {
                           { theseBooks.map((book) => {
                             return (
                               <li key={ book.id }>
-                                <Book
-                                  thisBook={ book }
-                                  changeBookShelf={ changeBookShelf }>
-                                >
-                                </Book>
+                                { Book ({
+                                  thisBook: book,
+                                  changeBookShelf: changeBookShelf
+                                })}
                               </li>
                             )
                           })}
