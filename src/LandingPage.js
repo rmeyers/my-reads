@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import FadeIn from 'react-fade-in';
 // import * as BooksAPI from './BooksAPI'
 import Book from './Book'
 
@@ -27,18 +28,20 @@ class LandingPage extends Component {
                     <div className="bookshelf" key={ shelf[0] }>
                       <h2 className="bookshelf-title">{ shelf[1] }</h2>
                       <div className="bookshelf-books">
-                        <ol className="books-grid">
-                          { theseBooks.map((book) => {
-                            return (
-                              <li key={ book.id }>
-                                { Book ({
-                                  thisBook: book,
-                                  changeBookShelf: changeBookShelf
-                                })}
-                              </li>
-                            )
-                          })}
-                        </ol>
+                        <FadeIn>
+                          <ol className="books-grid">
+                            { theseBooks.map((book) => {
+                              return (
+                                <li key={ book.id }>
+                                  { Book ({
+                                    thisBook: book,
+                                    changeBookShelf: changeBookShelf
+                                  })}
+                                </li>
+                              )
+                            })}
+                          </ol>
+                        </FadeIn>
                       </div>
                     </div>
                     )

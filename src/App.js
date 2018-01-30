@@ -1,10 +1,11 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-// import * as BooksAPI from './BooksAPI'
+import { Switch, Route } from 'react-router-dom'
+import FadeIn from 'react-fade-in';
 import './App.css'
 import * as BooksAPI from './BooksAPI'
 import SearchBooks from './SearchBooks'
 import LandingPage from './LandingPage'
+import NoMatch from './NoMatch'
 
 class BooksApp extends React.Component {
   constructor() {
@@ -38,18 +39,23 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route path="/" exact render={() => (
-          <LandingPage
-            books={this.state.books}
-            changeBookShelf={this.changeBookShelf}
-          />
-        )} />
-        <Route path="/search" render={() => (
-          <SearchBooks
-            books={this.state.books}
-            changeBookShelf={this.changeBookShelf}
-          />
-        )} />
+        <FadeIn>
+          <Switch>
+            <Route path="/" exact render={() => (
+              <LandingPage
+                books={this.state.books}
+                changeBookShelf={this.changeBookShelf}
+              />
+            )} />
+            <Route path="/search" render={() => (
+              <SearchBooks
+                books={this.state.books}
+                changeBookShelf={this.changeBookShelf}
+              />
+            )} />
+            <Route component={NoMatch} />
+          </Switch>
+        </FadeIn>
       </div>
     )
   }

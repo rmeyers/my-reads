@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import {DebounceInput} from 'react-debounce-input';
+import FadeIn from 'react-fade-in';
 // import PropTypes from 'prop-types'
 // import escapeRegExp from 'escape-string-regexp'
 // import sortBy from 'sort-by'
@@ -21,13 +23,15 @@ class SearchBooks extends Component {
         this.setState({ query })
 
         if (query) {
-
-            BooksAPI.search(query).then((result) => {
-                this.setState({newBooks: result})
-            })
-
+          BooksAPI.search(query).then((result) => {
+            if ('error' in result) {
+              this.setState({newBooks: []})
+            } else {
+              this.setState({newBooks: result})
+            }
+          })
         } else {
-            this.setState({newBooks: []})
+            this.setState({newBooks: [], query: ''})
         }
     }
 
@@ -51,7 +55,9 @@ class SearchBooks extends Component {
             <div className="search-books-bar">
               <Link to="/" className="close-search">Close</Link>
               <div className="search-books-input-wrapper">
-                <input
+                <DebounceInput
+                  minLength={2}
+                  debounceTimeout={200}
                   type='text'
                   placeholder='Search by title or author'
                   value={query}
@@ -60,16 +66,18 @@ class SearchBooks extends Component {
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid">
-                {newBooks.map((book) => (
-                  <li key={ book.id }>
-                    { Book ({
-                        thisBook: book,
-                        changeBookShelf: changeBookShelf
-                    })}
-                  </li>
-                ))}
-              </ol>
+              <FadeIn>
+                <ol className="books-grid">
+                  {newBooks.map((book) => (
+                    <li key={ book.id }>
+                      { Book ({
+                          thisBook: book,
+                          changeBookShelf: changeBookShelf
+                      })}
+                    </li>
+                  ))}
+                </ol>
+              </FadeIn>
             </div>
           </div>
         )

@@ -5,7 +5,13 @@ import React from 'react'
 const Book = (props) => {
   // These two variables below are used to just clean the code.
   const { thisBook, changeBookShelf } = props
-  const image = thisBook.imageLinks.thumbnail ? thisBook.imageLinks.thumbnail : "None"
+  if ('imageLinks' in thisBook) {
+    if ('thumbnail' in thisBook.imageLinks) {
+      var image = thisBook.imageLinks.thumbnail
+    }
+  } else {
+    image = "http://via.placeholder.com/128x193?text=No%20Cover"
+  }
   const title = thisBook.title ? thisBook.title : "No title available"
   const shelf = thisBook.shelf ? thisBook.shelf : "none"
 
